@@ -74,12 +74,44 @@ const FilterSection = ({ filters, onFilterChange }) => {
     ]
   };
 
+  const bodyTypes = [
+    { value: 'all', label: 'All body types' },
+    { value: 'coupe', label: 'Coupe' },
+    { value: 'sedan', label: 'Sedan' },
+    { value: 'suv', label: 'SUV' },
+    { value: 'convertible', label: 'Convertible' },
+    { value: 'hatchback', label: 'Hatchback' },
+    { value: 'pickup', label: 'Pickup' },
+    { value: 'roadster', label: 'Roadster' }
+  ];
+
+  const driveTypes = [
+    { value: 'all', label: 'All drive types' },
+    { value: 'AWD', label: 'AWD' },
+    { value: 'RWD', label: 'RWD' },
+    { value: 'FWD', label: 'FWD' }
+  ];
+
   const handleFilterChange = (type, value) => {
-    const filterType = type.toLowerCase();
-    if (filterType === 'drivetype') {
-      onFilterChange(filterType, value);
-    } else {
-      onFilterChange(filterType, value.toLowerCase());
+    console.log('FilterSection - handleFilterChange:', { type, value });
+    
+    switch (type) {
+      case 'bodyType':
+        if (value === 'all') {
+          onFilterChange('bodyType', 'all');
+        } else {
+          onFilterChange('bodyType', value.toLowerCase());
+        }
+        break;
+      case 'driveType':
+        if (value === 'all') {
+          onFilterChange('driveType', 'all');
+        } else {
+          onFilterChange('driveType', value);
+        }
+        break;
+      default:
+        onFilterChange(type, value);
     }
   };
 
@@ -187,9 +219,9 @@ const FilterSection = ({ filters, onFilterChange }) => {
                   value={filters.bodyType}
                   onChange={(e) => handleFilterChange('bodyType', e.target.value)}
                 >
-                  {filterOptions.bodyTypes.map((type) => (
-                    <option key={type} value={type.toLowerCase()}>
-                      {type}
+                  {bodyTypes.map((type) => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
                     </option>
                   ))}
                 </select>
@@ -202,9 +234,9 @@ const FilterSection = ({ filters, onFilterChange }) => {
                   value={filters.driveType}
                   onChange={(e) => handleFilterChange('driveType', e.target.value)}
                 >
-                  {filterOptions.driveTypes.map((type) => (
-                    <option key={type} value={type === 'All drive types' ? 'all' : type}>
-                      {type}
+                  {driveTypes.map((type) => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
                     </option>
                   ))}
                 </select>

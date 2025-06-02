@@ -28,53 +28,73 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = [...cars];
-
-    // FILTER
-    if (filters.brand !== 'all') {
-      filtered = filtered.filter(car => car.brand.replace(/\s/g, '').toLowerCase() === filters.brand.replace(/\s/g, '').toLowerCase());
-    }
-
-    if (filters.year !== 'all') {
-      // Jika value year adalah '1947 - 2025', tampilkan semua
-      if (!filters.year.includes('1947')) {
-        filtered = filtered.filter(car => car.year === parseInt(filters.year));
+    console.log('Home - Filtering cars with filters:', filters);
+    
+    const filtered = cars.filter(car => {
+      // Brand filter
+      if (filters.brand && filters.brand !== 'all' && car.brand !== filters.brand) {
+        return false;
       }
-    }
 
-    if (filters.price !== 'all') {
-      const [min, max] = filters.price.replace(/[^0-9\-]/g, '').split('-').map(Number);
-      filtered = filtered.filter(car => {
-        if (max) {
-          return car.price >= min && car.price <= max;
+      // Year filter
+      if (filters.year && filters.year !== 'all' && car.year !== parseInt(filters.year)) {
+        return false;
+      }
+
+      // Price filter
+      if (filters.price && filters.price !== 'all') {
+        const [min, max] = filters.price.split('-').map(Number);
+        if (car.price < min || car.price > max) {
+          return false;
         }
-        return car.price >= min;
-      });
-    }
+      }
 
-    if (filters.bodyType !== 'all') {
-      filtered = filtered.filter(car => car.body.toLowerCase() === filters.bodyType);
-    }
+      // Body type filter
+      if (filters.bodyType && filters.bodyType !== 'all') {
+        console.log('Comparing body types:', {
+          carBody: car.body,
+          filterBody: filters.bodyType,
+          carName: car.name
+        });
+        if (car.body !== filters.bodyType) {
+          return false;
+        }
+      }
 
-    if (filters.driveType !== 'all') {
-      filtered = filtered.filter(car => car.drivetrain === filters.driveType);
-    }
+      // Drive type filter
+      if (filters.driveType && filters.driveType !== 'all') {
+        console.log('Comparing drive types:', {
+          carDrivetrain: car.drivetrain,
+          filterDrivetrain: filters.driveType,
+          carName: car.name
+        });
+        if (car.drivetrain !== filters.driveType) {
+          return false;
+        }
+      }
 
-    // SEARCH (setelah filter)
-    if (filters.search) {
-      filtered = filtered.filter(car =>
-        car.name.toLowerCase().includes(filters.search.toLowerCase())
-      );
-    }
+      // Search filter
+      if (filters.search) {
+        const searchTerm = filters.search.toLowerCase();
+        return (
+          car.name.toLowerCase().includes(searchTerm) ||
+          car.brand.toLowerCase().includes(searchTerm)
+        );
+      }
 
+      return true;
+    });
+
+    console.log('Home - Filtered cars count:', filtered.length);
     setFilteredCars(filtered);
-  }, [filters, cars]);
+  }, [cars, filters]);
 
   const handleSearch = (searchTerm) => {
     setFilters(prev => ({ ...prev, search: searchTerm }));
   };
 
   const handleFilterChange = (filterType, value) => {
+    console.log('Home - handleFilterChange:', { filterType, value }); // Debug log
     setFilters(prev => ({ ...prev, [filterType]: value }));
   };
 
