@@ -32,6 +32,33 @@ const About = () => (
           <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1483&q=80" alt="Luxury Car Showroom" />
         </motion.div>
       </div>
+
+      {/* Mission and Vision Section */}
+      <div className="mission-vision">
+        <motion.h2 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.7, type: 'spring' }}>
+          Our Mission and Vision
+        </motion.h2>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7, type: 'spring' }}>
+          {/* Placeholder text for Mission and Vision */}
+          Mission: To be the leading provider of exceptional luxury and high-performance vehicles, offering an unparalleled customer experience.
+        </motion.p>
+         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7, type: 'spring' }}>
+          Vision: To create a community of passionate car enthusiasts and set new standards in the automotive industry.
+        </motion.p>
+      </div>
+
+      {/* Our Team Section */}
+      <div className="our-team">
+        <motion.h2 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 0.7, type: 'spring' }}>
+          Our Team
+        </motion.h2>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 0.7, type: 'spring' }}>
+          {/* Placeholder text for Our Team */}
+          Meet the dedicated team behind Qudz Motors. Our experts are passionate about cars and committed to providing you with the best service.
+        </motion.p>
+        {/* You can add team member components here */} 
+      </div>
+
     </div>
   </motion.section>
 );
